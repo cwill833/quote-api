@@ -1,9 +1,8 @@
 const express = require('express')
 const router = express.Router()
 
-const { quotes } = require('./data');
-const { getRandomElement } = require('./utils');
+const quoteCtrl = require('../controllers/quote')
 
-
+router.get('/random', quoteCtrl.getRandomQuote)
 
 module.exports = router
