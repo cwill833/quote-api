@@ -3,7 +3,8 @@ const { getRandomElement } = require('../utils');
 
 module.exports = {
     getRandomQuote,
-    getAll
+    getAllOrOne,
+    add
 }
 
 function getRandomQuote(req, res){
@@ -12,12 +13,25 @@ function getRandomQuote(req, res){
     res.send({quote: randoQuote})
 }
 
-function getAll(req, res){
+function getAllOrOne(req, res){
     if (Object.keys(req.query).length === 0){
-        console.log("empty")
         res.send({quotes})
     }
-
     
+    const filtered = quotes.filter(e=>{
+        if (e.person === req.query.person) return e
+    })
 
+    res.send({quotes: filtered})
+
+}
+
+function add(req, res){
+    if(req.query.quote && req.query.person){
+        let data = {quote: req.query.quote, person: req.query.person}
+        quotes.push(data)
+        res.send({quote: data})
+    }
+
+    res.status(400).send()
 }
